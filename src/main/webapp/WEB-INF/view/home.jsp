@@ -15,9 +15,11 @@
 
 <!-- 画像の表示 -->
 	<div class="row">
-		<c:forEach items="${files}" var="file">
+		<c:forEach items="${petList}" var="pet">
 			<div class="col-12 col-md-3">
-				<img class="img-thumbnail" src="uploads/<c:out value="${file.name}" />">
+			<a href="/home/<c:out value="${pet.id}" />">
+				<img class="img-thumbnail" src="uploads/<c:out value="${pet.image}" />">
+			</a>
 			</div>
 		</c:forEach>
 	</div>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.PetDao">
+
+	<select id="selectAll" resultType="com.zdrv.domain.Pet">
+		SELECT
+		id, image, pet_name AS petName, comment
+		FROM pets
+	</select>
+
+	<select id="selectById" parameterType="int">
+		SELECT
+		pet.id, pet.image, pet.pet_name, pet.comment
+		FROM pets
+		WHERE pet.id = #{id}
+	</select>
+
+	<insert id="insert" parameterType="com.zdrv.domain.Pet"
+	useGeneratedKeys="true" keyProperty="id">
+	INSERT INTO pets (image, pet_name, comment)
+	VALUES (#{image}, #{petName}, #{comment})
+	</insert>
+
+</mapper>

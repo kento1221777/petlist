@@ -12,8 +12,14 @@
 		name="form">
 		<p>
 			ファイル：<input type="file" name="upfile" id="upfile">
-			<input type="submit">
 		</p>
+		<p>
+			名前：<input type="text" name="petName" id="petName" />
+		</p>
+		<p>
+			コメント<input type="text" name="comment" id="comment" />
+		</p>
+<input type="submit">
 	</form>
 
 
