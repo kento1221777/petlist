@@ -10,5 +10,7 @@
 <img class="img-thumbnail" src="uploads/<c:out value="${pet.image}" />">
 <c:out value="${pet.petName}" />
 <c:out value="${pet.comment}" />
+<c:out value="${pet.category}" />
+<c:out value="${pet.category.categoryName}" />
 </body>
 </html>

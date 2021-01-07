@@ -11,6 +11,7 @@ public interface PetDao {
 
 	List<Pet> selectAll() throws Exception;
 	Pet selectById(Integer id) throws Exception;
+	List<Pet> selectAllByCategoryId(Integer id) throws Exception;
 	void insert(Pet pet) throws Exception;
 
 }

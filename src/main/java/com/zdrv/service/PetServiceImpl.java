@@ -39,4 +39,11 @@ public class PetServiceImpl implements PetService {
 		petDao.insert(pet);
 	}
 
+	@Override
+	public List<Pet> getPetListByCategoryId(Integer id) throws Exception {
+		return petDao.selectAllByCategoryId(id);
+	}
+
+
+
 }

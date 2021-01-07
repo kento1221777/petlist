@@ -10,6 +10,7 @@ public interface PetService {
 
 	List<Pet> getPetList() throws Exception;
 	Pet getPetById(Integer id) throws Exception;
+	List<Pet> getPetListByCategoryId(Integer id) throws Exception;
 	void addPet(Pet pet) throws Exception;
 
 }

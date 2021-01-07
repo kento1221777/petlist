@@ -1,6 +1,8 @@
 package com.zdrv.controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.zdrv.domain.Category;
 import com.zdrv.domain.Pet;
 import com.zdrv.service.PetService;
 
@@ -25,7 +28,19 @@ public class UploadController {
 	PetService petService;
 
 	@GetMapping
-	public String upload() {
+	public String upload(Model model) {
+		model.addAttribute("pet", new Pet());
+
+		List<Category> categoryList = new ArrayList<>();
+		categoryList.add(new Category(1, "犬"));
+		categoryList.add(new Category(2, "猫"));
+		categoryList.add(new Category(3, "うさぎ"));
+		categoryList.add(new Category(4, "ハムスター"));
+		categoryList.add(new Category(5, "鳥"));
+		categoryList.add(new Category(6, "魚"));
+		categoryList.add(new Category(7, "その他"));
+
+		model.addAttribute("categoryList", categoryList);
 		return "upload";
 	}
 

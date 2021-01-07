@@ -8,19 +8,31 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="" method="post" enctype="multipart/form-data"
-		name="form">
+
+	<form:form action="" method="post" modelAttribute="pet"
+		enctype="multipart/form-data">
 		<p>
-			ファイル：<input type="file" name="upfile" id="upfile">
+			ファイル：
+			<form:input type="file" path="upfile" />
 		</p>
 		<p>
-			名前：<input type="text" name="petName" id="petName" />
+			名前：
+			<form:input path="petName" />
 		</p>
 		<p>
-			コメント<input type="text" name="comment" id="comment" />
+			コメント
+			<form:textarea path="comment" />
 		</p>
-<input type="submit">
-	</form>
+
+		<p>
+			カテゴリ：
+			<form:select path="category.id" items="${categoryList}"
+						 itemValue="id" itemLabel="categoryName" />
+		</p>
+
+		<input type="submit" />
+
+	</form:form>
 
 
 </body>
