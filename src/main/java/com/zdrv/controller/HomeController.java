@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zdrv.domain.Category;
+import com.zdrv.domain.User;
 import com.zdrv.service.PetService;
 
 @Controller
@@ -25,8 +27,8 @@ public class HomeController {
 	@GetMapping()
 	public String home(
 			HttpServletRequest request,
+			HttpSession session,
 			Model model) throws Exception {
-		model.addAttribute("petList", petService.getPetList());
 		List<Category> categoryList = new ArrayList<>();
 		categoryList.add(new Category(1, "犬"));
 		categoryList.add(new Category(2, "猫"));
@@ -36,11 +38,15 @@ public class HomeController {
 		categoryList.add(new Category(6, "魚"));
 		categoryList.add(new Category(7, "その他"));
 
+		request.getSession();
+		User user = (User) session.getAttribute("user");
+		model.addAttribute("user", user);
+		model.addAttribute("petList", petService.getPetList());
 		model.addAttribute("categoryList", categoryList);
 		return "home";
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping({"/{id}", "category/detail/{id}"})
 	public String detail(
 			@PathVariable Integer id,
 			Model model) throws Exception {
@@ -48,13 +54,15 @@ public class HomeController {
 		return "detail";
 	}
 
-	@GetMapping("/category/{id}")
+	@GetMapping("/category/{categoryId}")
 	public String category(
-			@PathVariable Integer id,
+			@PathVariable Integer categoryId,
 			Model model) throws Exception {
-		model.addAttribute("categoryTypeList", petService.getPetListByCategoryId(id));
+		model.addAttribute("categoryTypeList", petService.getPetListByCategoryId(categoryId));
 		return "category";
 	}
+
+
 
 
 

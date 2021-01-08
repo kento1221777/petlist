@@ -44,7 +44,7 @@ public class LoginController {
 
 		// 正しいログインIDとパスワード
 		// ⇒ セッションにログインIDを格納し、リダイレクト
-		session.setAttribute("loginId", user.getLoginId());
+		session.setAttribute("user", user);
 		return "redirect:/home";
 	}
 

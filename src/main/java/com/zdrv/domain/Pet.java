@@ -16,6 +16,7 @@ public class Pet {
 	private String petName;
 	private String comment;
 	private Category category;
+	private User user;
 	private MultipartFile upfile;
 	private String uploadDirectory;
 
