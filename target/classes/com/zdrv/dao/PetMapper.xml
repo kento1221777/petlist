@@ -15,7 +15,6 @@
 	</resultMap>
 
 
-
 	<select id="selectAll" resultMap="joinedResult">
 		SELECT * FROM pets
 		JOIN categories
@@ -28,6 +27,7 @@
 		ON pets.category_id = categories.id
 		WHERE pets.id = #{id}
 	</select>
+
 
 
 	<select id="selectAllByCategoryId" parameterType="int" resultMap="joinedResult">

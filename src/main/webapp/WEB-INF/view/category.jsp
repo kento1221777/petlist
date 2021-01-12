@@ -15,22 +15,18 @@
 </head>
 <body>
 <h1>一覧</h1>
+
+
 <p><a href="upload">投稿</a></p>
 <p><a href="logout">ログアウト</a></p>
-<p><c:out value="${loginId}" />さん</p>
-<p><c:out value="${name}" />さん</p>
-<p><a href="home/gallery/<c:out value="${id} "/>">マイギャラリー</a></p>
 
-<c:forEach items="${categoryList}" var="category">
-<a href="home/category/<c:out value="${category.id} "/>"> <c:out value="${category.categoryName} "/> </a>
-</c:forEach>
 
 <!-- 画像の表示 -->
 	<div class="row">
-		<c:forEach items="${petList}" var="pet">
+		<c:forEach items="${categoryTypeList}" var="category">
 			<div class="col-12 col-md-3">
-			<a href="home/<c:out value="${pet.id}" />">
-				<img class="img-thumbnail" src="${uploads}/<c:out value="${pet.image}" />">
+			<a href="detail/<c:out value="${category.id}" />">
+				<img class="img-thumbnail" src="${uploads}/<c:out value="${category.image}" />">
 			</a>
 			</div>
 		</c:forEach>

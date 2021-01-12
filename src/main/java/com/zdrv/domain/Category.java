@@ -1,7 +1,5 @@
 package com.zdrv.domain;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,16 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Category {
 
 	private Integer id;
-
-	private String loginId;
-
-	private String loginPass;
-
-	private String name;
-
-	private List<Pet> pets;
+	private String categoryName;
 
 }

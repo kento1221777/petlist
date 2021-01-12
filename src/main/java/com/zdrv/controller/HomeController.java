@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zdrv.domain.Category;
-import com.zdrv.domain.User;
 import com.zdrv.service.PetService;
+import com.zdrv.service.UserService;
 
 @Controller
 @RequestMapping("/home")
@@ -23,6 +23,8 @@ public class HomeController {
 
 	@Autowired
 	PetService petService;
+	UserService userService;
+
 
 	@GetMapping()
 	public String home(
@@ -38,9 +40,12 @@ public class HomeController {
 		categoryList.add(new Category(6, "魚"));
 		categoryList.add(new Category(7, "その他"));
 
-		request.getSession();
-		User user = (User) session.getAttribute("user");
-		model.addAttribute("user", user);
+
+		Object name = session.getAttribute("name");
+		model.addAttribute("name", name);
+		Integer id = (Integer) session.getAttribute("id");
+		model.addAttribute("id", id);
+
 		model.addAttribute("petList", petService.getPetList());
 		model.addAttribute("categoryList", categoryList);
 		return "home";
@@ -62,7 +67,13 @@ public class HomeController {
 		return "category";
 	}
 
-
+	@GetMapping("/gallery/{id}")
+	public String gallery(
+			@PathVariable Integer id,
+			Model model) throws Exception {
+		model.addAttribute("galleryList", userService.getMyimageByUserId(id));
+		return "userpage/gallery";
+	}
 
 
 
