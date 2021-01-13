@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,8 +28,8 @@ public class UploadController {
 	@Autowired
 	PetService petService;
 
-	@GetMapping
-	public String upload(Model model) {
+	@GetMapping("/{id}")
+	public String upload(@PathVariable Integer id, Model model) {
 		model.addAttribute("pet", new Pet());
 
 		List<Category> categoryList = new ArrayList<>();
@@ -66,6 +67,7 @@ public class UploadController {
 		File dest = new File(request.getServletContext().getRealPath("/uploads") + "/" + image);
 		System.out.println(dest);
 		upfile.transferTo(dest);
+
 
 		petService.addPet(pet);
 

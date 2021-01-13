@@ -40,9 +40,16 @@ public class PetServiceImpl implements PetService {
 	}
 
 	@Override
+	@Transactional
+	public List<Pet> getPetListByUserId(Integer userId) throws Exception {
+		return petDao.selectAllByUserId(userId);
+	}
+
+	@Override
 	public List<Pet> getPetListByCategoryId(Integer categoryId) throws Exception {
 		return petDao.selectAllByCategoryId(categoryId);
 	}
+
 
 
 

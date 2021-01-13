@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<form:form action="" method="post" modelAttribute="pet"
 		enctype="multipart/form-data">
 		<p>

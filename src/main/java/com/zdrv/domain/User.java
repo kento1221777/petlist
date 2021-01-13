@@ -19,6 +19,6 @@ public class User {
 
 	private String name;
 
-	private List<Pet> pets;
+	private List<Pet> pet;
 
 }

@@ -15,9 +15,8 @@
 </head>
 <body>
 <h1>一覧</h1>
-<p><a href="upload">投稿</a></p>
+<p><a href="upload/<c:out value="${id} "/>">投稿</a></p>
 <p><a href="logout">ログアウト</a></p>
-<p><c:out value="${loginId}" />さん</p>
 <p><c:out value="${name}" />さん</p>
 <p><a href="home/gallery/<c:out value="${id} "/>">マイギャラリー</a></p>
 

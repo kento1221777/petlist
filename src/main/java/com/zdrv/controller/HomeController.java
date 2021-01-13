@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zdrv.domain.Category;
+import com.zdrv.domain.Pet;
 import com.zdrv.service.PetService;
 import com.zdrv.service.UserService;
 
@@ -23,13 +23,13 @@ public class HomeController {
 
 	@Autowired
 	PetService petService;
+	@Autowired
 	UserService userService;
 
 
 	@GetMapping()
 	public String home(
 			HttpServletRequest request,
-			HttpSession session,
 			Model model) throws Exception {
 		List<Category> categoryList = new ArrayList<>();
 		categoryList.add(new Category(1, "犬"));
@@ -39,12 +39,6 @@ public class HomeController {
 		categoryList.add(new Category(5, "鳥"));
 		categoryList.add(new Category(6, "魚"));
 		categoryList.add(new Category(7, "その他"));
-
-
-		Object name = session.getAttribute("name");
-		model.addAttribute("name", name);
-		Integer id = (Integer) session.getAttribute("id");
-		model.addAttribute("id", id);
 
 		model.addAttribute("petList", petService.getPetList());
 		model.addAttribute("categoryList", categoryList);
@@ -71,8 +65,13 @@ public class HomeController {
 	public String gallery(
 			@PathVariable Integer id,
 			Model model) throws Exception {
-		model.addAttribute("galleryList", userService.getMyimageByUserId(id));
-		return "userpage/gallery";
+		List<Pet> petList = petService.getPetListByUserId(id);
+		System.out.println(petList.size());
+		for(Pet p : petList) {
+			System.out.println(p.getImage());
+		}
+		model.addAttribute("petList", petList);
+		return "gallery";
 	}
 
 

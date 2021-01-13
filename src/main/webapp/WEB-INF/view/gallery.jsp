@@ -14,23 +14,23 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>一覧</h1>
+<h1><c:out value="${name}" />投稿一覧</h1>
 
 
 <p><a href="upload">投稿</a></p>
 <p><a href="logout">ログアウト</a></p>
 
 
+
 <!-- 画像の表示 -->
 	<div class="row">
-		<c:forEach items="${gallery}" var="galleryList">
+		<c:forEach items="${petList}" var="pet">
 			<div class="col-12 col-md-3">
-			<a href="detail/<c:out value="${gallery.id}" />">
-				<img class="img-thumbnail" src="${uploads}/<c:out value="${gallery.image}" />">
-			</a>
+				<img class="img-thumbnail" src="${uploads}/<c:out value="${pet.image}" />">
 			</div>
 		</c:forEach>
 	</div>
+
 
 <script src="${js}/jquery-3.5.1.min.js"></script>
 <script src="${js}/bootstrap.min.js"></script>

@@ -37,10 +37,17 @@
 		WHERE pets.category_id = #{category.id}
 	</select>
 
+	<select id="selectAllByUserId" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		WHERE user_id = #{userId}
+	</select>
+
 	<insert id="insert" parameterType="com.zdrv.domain.Pet"
 	useGeneratedKeys="true">
 	INSERT INTO pets (image, pet_name, comment, category_id)
 	VALUES (#{image}, #{petName}, #{comment}, #{category.id})
 	</insert>
+
+
 
 </mapper>
