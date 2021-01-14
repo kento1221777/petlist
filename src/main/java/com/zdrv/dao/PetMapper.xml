@@ -7,6 +7,7 @@
 		<result property="image" column="image"/>
 		<result property="petName" column="pet_name"/>
 		<result property="comment" column="comment"/>
+		<result property="uptime" column="uptime"/>
 		<association property="category" column="category_id"
 			javaType="com.zdrv.domain.Category">
 			<id property="id" column="id"/>
@@ -19,6 +20,14 @@
 		SELECT * FROM pets
 		JOIN categories
 		ON pets.category_id = categories.id
+		ORDER BY uptime DESC
+	</select>
+
+	<select id="selectAllAsc" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN categories
+		ON pets.category_id = categories.id
+		ORDER BY uptime ASC
 	</select>
 
 	<select id="selectById" parameterType="int" resultMap="joinedResult">
@@ -28,26 +37,49 @@
 		WHERE pets.id = #{id}
 	</select>
 
-
-
 	<select id="selectAllByCategoryId" parameterType="int" resultMap="joinedResult">
 		SELECT * FROM pets
 		JOIN categories
 		ON pets.category_id = categories.id
 		WHERE pets.category_id = #{category.id}
+		ORDER BY uptime DESC
+	</select>
+
+	<select id="selectAllByCategoryIdAsc" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN categories
+		ON pets.category_id = categories.id
+		WHERE pets.category_id = #{category.id}
+		ORDER BY uptime ASC
 	</select>
 
 	<select id="selectAllByUserId" parameterType="int" resultMap="joinedResult">
 		SELECT * FROM pets
 		WHERE user_id = #{userId}
+		ORDER BY uptime DESC
 	</select>
 
-	<insert id="insert" parameterType="com.zdrv.domain.Pet"
-	useGeneratedKeys="true">
-	INSERT INTO pets (image, pet_name, comment, category_id)
-	VALUES (#{image}, #{petName}, #{comment}, #{category.id})
+	<select id="selectAllByUserIdAsc" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		WHERE user_id = #{userId}
+		ORDER BY uptime ASC
+	</select>
+
+
+	<insert id="insert" parameterType="com.zdrv.domain.Pet" useGeneratedKeys="true">
+		INSERT INTO pets (image, pet_name, comment, category_id, user_id, uptime)
+		VALUES (#{image}, #{petName}, #{comment}, #{category.id}, #{userId}, NOW())
 	</insert>
 
+	<update id="update" parameterType="com.zdrv.domain.Pet">
+		UPDATE pets
+		SET image = #{image}, pet_name = #{petName}, comment = #{comment},
+			category_id = #{category.id}
+		WHERE id = #{id}
+	</update>
 
+	<delete id="delete" parameterType="int">
+		DELETE FROM pets WHERE id = #{id}
+	</delete>
 
 </mapper>

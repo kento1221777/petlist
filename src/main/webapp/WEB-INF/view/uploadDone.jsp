@@ -7,6 +7,6 @@
 </head>
 <body>
 <h1>投稿完了</h1>
-<p><a href="home">ホーム</a></p>
+<p><a href="/Petlist/home">ホーム</a></p>
 </body>
 </html>

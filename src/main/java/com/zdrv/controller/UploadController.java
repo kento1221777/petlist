@@ -22,13 +22,13 @@ import com.zdrv.domain.Pet;
 import com.zdrv.service.PetService;
 
 @Controller
-@RequestMapping("/upload")
+@RequestMapping("/upload/{id}")
 public class UploadController {
 
 	@Autowired
 	PetService petService;
 
-	@GetMapping("/{id}")
+	@GetMapping
 	public String upload(@PathVariable Integer id, Model model) {
 		model.addAttribute("pet", new Pet());
 
@@ -47,6 +47,7 @@ public class UploadController {
 
 	@PostMapping
 	public String doPost(
+			@PathVariable Integer id,
 			HttpServletRequest request,
 			@RequestParam MultipartFile upfile, @Valid Pet pet, Model model) throws Exception {
 		if(upfile.isEmpty()) {
@@ -68,7 +69,7 @@ public class UploadController {
 		System.out.println(dest);
 		upfile.transferTo(dest);
 
-
+		pet.setUserId(id);
 		petService.addPet(pet);
 
 		return "uploadDone";
