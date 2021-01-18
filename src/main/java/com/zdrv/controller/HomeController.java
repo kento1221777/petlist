@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.zdrv.domain.Category;
 import com.zdrv.domain.Pet;
+import com.zdrv.service.LikeService;
 import com.zdrv.service.PetService;
 import com.zdrv.service.UserService;
 
@@ -25,7 +26,8 @@ public class HomeController {
 	PetService petService;
 	@Autowired
 	UserService userService;
-
+	@Autowired
+	LikeService likeService;
 
 	@GetMapping()
 	public String home(
@@ -74,6 +76,10 @@ public class HomeController {
 		return "gallery";
 	}
 
-
+	@GetMapping("/like/{petId}/{userId}")
+	public String likeGet(@PathVariable("petId") Integer petId, @PathVariable("userId") Integer userId) throws Exception {
+		likeService.addLike(petId, userId);
+		return "redirect:/home";
+	}
 
 }

@@ -50,6 +50,23 @@ public class PetServiceImpl implements PetService {
 		return petDao.selectAllByCategoryId(categoryId);
 	}
 
+	@Override
+	public void editPet(Pet pet) throws Exception {
+		MultipartFile upfile = pet.getUpfile();
+
+		//選択されたファイルの情報
+		String image = upfile.getOriginalFilename();
+
+		pet.setImage(image);
+
+		petDao.update(pet);
+	}
+
+	@Override
+	public void deletePet(Integer id) throws Exception {
+		petDao.delete(id);
+	}
+
 
 
 
