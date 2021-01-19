@@ -11,16 +11,26 @@ public class LikeServiceImpl implements LikeService {
 	@Autowired
 	LikeDao likeDao;
 
-
 	@Override
 	public void addLike(Integer petId, Integer userId) throws Exception {
 		likeDao.insert(petId, userId);
 	}
 
 	@Override
-	public void deletePet(Integer id) throws Exception {
-		// TODO 自動生成されたメソッド・スタブ
+	public void deleteLike(Integer petId, Integer userId) throws Exception {
+		likeDao.delete(petId, userId);
+	}
 
+	@Override
+	public boolean addDeleteLike(Integer petId, Integer userId) throws Exception {
+		// すでに「いいね」済みか調べる
+		if(likeDao.findByPetIdAndUserId(petId, userId) != null) {
+			likeDao.delete(petId, userId);
+			return false;
+		} else {
+			likeDao.insert(petId, userId);
+			return true;
+		}
 	}
 
 

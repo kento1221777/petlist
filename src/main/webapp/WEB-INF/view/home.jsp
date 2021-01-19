@@ -50,6 +50,7 @@
 					onclick="location.href='home/like/<c:out value="${pet.id}" />/<c:out value="${id}" />'"
 					type="button" class="btn btn-primary">いいね
 				</button>
+				<button class="likeButton" data-pet_id="<c:out value="${pet.id}" />" data-user_id="<c:out value="${id}" />">LIKE</button>
 			</div>
 		</c:forEach>
 	</div>
@@ -58,7 +59,27 @@
 	<script src="${js}/bootstrap.min.js"></script>
 
 <script>
+$('.likeButton').click(function(){
+	const petId = $(this).attr('data-pet_id');
+	const userId = $(this).attr('data-user_id');
 
+
+	$.ajax({
+		url: 'http://localhost:8080/Petlist/home/like/' + petId + '/' + userId,
+		type: 'GET'
+	})
+	.done(function(res){
+		// 「いいね」追加の場合はtrue、削除の場合はfalseがresに入る
+		console.log(res);
+		if(res == true) {
+			// ボタンに色を付ける クラスつけてCSS適用
+		}
+
+	})
+	.fail(function(){
+		console.log("AJAX通信に失敗");
+	});
+});
 
 </script>
 </body>

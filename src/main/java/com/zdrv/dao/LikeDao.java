@@ -1,11 +1,15 @@
 package com.zdrv.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import com.zdrv.domain.Like;
 
 @Mapper
 public interface LikeDao {
 
-	void insert(Integer petId, Integer userId) throws Exception;
-	void delete(Integer id) throws Exception;
+	void insert(@Param("petId") Integer petId, @Param("userId") Integer userId) throws Exception;
+	void delete(@Param("petId") Integer petId, @Param("userId") Integer userId) throws Exception;
+	Like findByPetIdAndUserId (@Param("petId") Integer petId, @Param("userId") Integer userId) throws Exception;
 
 }
