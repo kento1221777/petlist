@@ -15,7 +15,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<img class="img-thumbnail" src="${uploads}/<c:out value="${pet.image}" />">
+	<c:out value="${pet.petName}" />
+	<c:out value="${pet.comment}" />
+	<c:out value="${pet.category.categoryName}" />
 
 	<form:form action="" method="post" modelAttribute="pet"
 		enctype="multipart/form-data">

@@ -2,24 +2,24 @@ h1 {
 	color: red;
 }
 
-.hoge2A{
-background-color:#fff;
-（省略）
+.hoge2A {
+	background-color: #fff;
+	（省略）
 }
 
-.like-btn {
- width: 25px;
- height: 30px;
- font-size: 25px;
- color: #808080;
- margin-left: 20px;
- }
+.error {
+	color: #f00;
+}
 
-.unlike-btn {
- width: 25px;
- height: 30px;
- font-size: 25px;
- color: #e54747;
- margin-left: 20px;
- }
-
+.heart {
+  width: 100px;
+  height: 100px;
+  background: url(http://nelog.jp/wp-content/uploads/2016/03/heart_animation.png) no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+}
+.like {
+  background-position: -2800px 0;
+  -webkit-transition: background 1s steps(28);
+  transition: background 1s steps(28);
+}

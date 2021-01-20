@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ public class HomeController {
 
 	@GetMapping()
 	public String home(
+			HttpSession session,
 			HttpServletRequest request,
 			Model model) throws Exception {
 		List<Category> categoryList = new ArrayList<>();
@@ -43,12 +45,14 @@ public class HomeController {
 		categoryList.add(new Category(6, "魚"));
 		categoryList.add(new Category(7, "その他"));
 
-		model.addAttribute("petList", petService.getPetList());
+		Integer userId = (Integer) session.getAttribute("id");
+
+		model.addAttribute("petList", petService.getPetList(userId));
 		model.addAttribute("categoryList", categoryList);
 		return "home";
 	}
 
-	@GetMapping({"/{id}", "category/detail/{id}"})
+	@GetMapping("detail/{id}")
 	public String detail(
 			@PathVariable Integer id,
 			Model model) throws Exception {
@@ -83,5 +87,13 @@ public class HomeController {
 		return likeService.addDeleteLike(petId, userId);
 	}
 
+	@GetMapping("/like/{id}")
+	public String like(@PathVariable Integer id,
+			Model model) throws Exception {
+		List<Pet> petList = petService.getPetListByLike(id);
+		model.addAttribute("petList", petList);
+		return "like";
+
+	}
 
 }

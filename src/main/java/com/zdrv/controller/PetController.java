@@ -76,7 +76,7 @@ public class PetController {
 	}
 
 	@GetMapping("/home/gallery/edit/{id}")
-	public String editGet(@PathVariable Integer id, Model model) {
+	public String editGet(@PathVariable Integer id, Model model) throws Exception {
 		model.addAttribute("pet", new Pet());
 
 		List<Category> categoryList = new ArrayList<>();
@@ -88,6 +88,7 @@ public class PetController {
 		categoryList.add(new Category(6, "魚"));
 		categoryList.add(new Category(7, "その他"));
 
+		model.addAttribute("pet", petService.getPetById(id));
 		model.addAttribute("categoryList", categoryList);
 		return "edit";
 	}

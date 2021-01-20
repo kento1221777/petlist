@@ -65,6 +65,14 @@
 		ORDER BY uptime ASC
 	</select>
 
+	<select id="selectAllByLike" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN likes
+		ON pets.id = likes.pet_id
+		JOIN users
+		ON likes.user_id = users.id
+		WHERE likes.user_id = #{userId}
+	</select>
 
 	<insert id="insert" parameterType="com.zdrv.domain.Pet" useGeneratedKeys="true">
 		INSERT INTO pets (image, pet_name, comment, category_id, user_id, uptime)

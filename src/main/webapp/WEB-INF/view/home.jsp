@@ -5,6 +5,8 @@
 <spring:url value="/uploads" var="uploads" />
 <spring:url value="/css" var="css" />
 <spring:url value="/js" var="js" />
+<spring:url value="/home/detail" var="detail" />
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -30,6 +32,9 @@
 	<p>
 		<a href="home/gallery/<c:out value="${id} "/>">マイギャラリー</a>
 	</p>
+	<p>
+		<a href="home/like/<c:out value="${id} "/>">お気に入り一覧</a>
+	</p>
 
 	<c:forEach items="${categoryList}" var="category">
 		<a href="home/category/<c:out value="${category.id} "/>"> <c:out
@@ -42,15 +47,19 @@
 	<c:out value="${id}" />
 		<c:forEach items="${petList}" var="pet">
 			<div class="col-12 col-md-3">
-				<a href="home/<c:out value="${pet.id}" />"> <img
+				<a href="${detail}/<c:out value="${pet.id}" />"> <img
 					class="img-thumbnail"
 					src="${uploads}/<c:out value="${pet.image}" />">
 				</a>
-				<button
-					onclick="location.href='home/like/<c:out value="${pet.id}" />/<c:out value="${id}" />'"
-					type="button" class="btn btn-primary">いいね
-				</button>
-				<button class="likeButton" data-pet_id="<c:out value="${pet.id}" />" data-user_id="<c:out value="${id}" />">LIKE</button>
+
+
+				<c:if test="${pet.isLike}">
+					<div class="heart like" data-pet_id="<c:out value="${pet.id}" />" data-user_id="<c:out value="${id}" />"></div>
+				</c:if>
+
+				<c:if test="${pet.isLike == false}">
+					<div class="heart" data-pet_id="<c:out value="${pet.id}" />" data-user_id="<c:out value="${id}" />"></div>
+				</c:if>
 			</div>
 		</c:forEach>
 	</div>
@@ -59,10 +68,11 @@
 	<script src="${js}/bootstrap.min.js"></script>
 
 <script>
-$('.likeButton').click(function(){
+$('.heart').click(function(){
 	const petId = $(this).attr('data-pet_id');
 	const userId = $(this).attr('data-user_id');
 
+	const clickedButton = $(this);
 
 	$.ajax({
 		url: 'http://localhost:8080/Petlist/home/like/' + petId + '/' + userId,
@@ -71,8 +81,13 @@ $('.likeButton').click(function(){
 	.done(function(res){
 		// 「いいね」追加の場合はtrue、削除の場合はfalseがresに入る
 		console.log(res);
+
 		if(res == true) {
 			// ボタンに色を付ける クラスつけてCSS適用
+			clickedButton.addClass('like');
+		}
+		else if(res == false) {
+			clickedButton.removeClass('like')
 		}
 
 	})
@@ -80,6 +95,8 @@ $('.likeButton').click(function(){
 		console.log("AJAX通信に失敗");
 	});
 });
+
+
 
 </script>
 </body>

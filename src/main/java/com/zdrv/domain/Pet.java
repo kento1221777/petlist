@@ -23,4 +23,10 @@ public class Pet {
 	private MultipartFile upfile;
 	private String uploadDirectory;
 
+	private boolean isLike;
+
+	public boolean getIsLike() {
+		return this.isLike;
+	}
+
 }
