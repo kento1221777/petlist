@@ -8,6 +8,7 @@
 <spring:url value="/logout" var="logout" />
 <spring:url value="/add" var="add" />
 <spring:url value="/home/detail" var="detail" />
+<spring:url value="/home" var="home" />
 
 
 <!DOCTYPE html>
@@ -30,6 +31,9 @@
 	</p>
 	<p>
 		<a href="${logout}">ログアウト</a>
+	</p>
+	<p>
+		<a href="${home}/like/<c:out value="${id} "/>">お気に入り一覧</a>
 	</p>
 
 

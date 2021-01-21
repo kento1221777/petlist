@@ -28,4 +28,9 @@
 		WHERE pets.user_id = #{id}
 	</select>
 
+	<insert id="insertUser" parameterType="com.zdrv.domain.User" useGeneratedKeys="true">
+		INSERT INTO users (name, login_id, login_pass)
+		VALUES (#{name}, #{loginId}, #{loginPass})
+	</insert>
+
 </mapper>

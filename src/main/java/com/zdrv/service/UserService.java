@@ -10,6 +10,6 @@ public interface UserService {
 	boolean isCorrectIdAndPassword(String loginId, String loginPass) throws Exception;
 	User getUser(String loginId) throws Exception;
 	List<Pet> getMyimageByUserId(Integer id) throws Exception;
-
+	void addUser(User user) throws Exception;
 
 }

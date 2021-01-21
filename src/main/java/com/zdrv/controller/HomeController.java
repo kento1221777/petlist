@@ -68,8 +68,8 @@ public class HomeController {
 		return "category";
 	}
 
-	@GetMapping("/gallery/{id}")
-	public String gallery(
+	@GetMapping("/mypage/{id}")
+	public String mypage(
 			@PathVariable Integer id,
 			Model model) throws Exception {
 		List<Pet> petList = petService.getPetListByUserId(id);
@@ -78,7 +78,7 @@ public class HomeController {
 			System.out.println(p.getImage());
 		}
 		model.addAttribute("petList", petList);
-		return "gallery";
+		return "mypage";
 	}
 
 	@GetMapping("/like/{petId}/{userId}")

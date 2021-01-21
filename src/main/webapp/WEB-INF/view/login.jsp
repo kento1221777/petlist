@@ -13,6 +13,8 @@
 <div class="text-center mt-4">
 <h1>ログイン画面</h1>
 
+	<a href="addUser">新規会員登録</a>
+
 
 	<form:form class="mt-4" action="" method="post" modelAttribute="user">
 		<form:errors path="loginId" cssClass="error" />

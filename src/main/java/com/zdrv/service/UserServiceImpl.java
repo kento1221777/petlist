@@ -5,6 +5,7 @@ import java.util.List;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zdrv.dao.UserDao;
 import com.zdrv.domain.Pet;
@@ -42,8 +43,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUser(String loginId) throws Exception {
 
-
 		return dao.selectByLoginId(loginId);
+	}
+
+	@Override
+	@Transactional
+	public void addUser(User user) throws Exception {
+		// パスワードをハッシュ化してセット
+		String hashed = BCrypt.hashpw(user.getLoginPass(), BCrypt.gensalt());
+		user.setLoginPass(hashed);
+		dao.insertUser(user);
 	}
 
 }

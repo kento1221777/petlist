@@ -9,5 +9,6 @@ public interface UserDao {
 
 	User selectByLoginId(String loginId) throws Exception;
 	List<Pet> selectMyimageByUserId(Integer id) throws Exception;
+	void insertUser(User user) throws Exception;
 
 }

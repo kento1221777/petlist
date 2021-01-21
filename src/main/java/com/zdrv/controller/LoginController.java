@@ -1,5 +1,6 @@
 package com.zdrv.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -55,6 +56,19 @@ public class LoginController {
 		// セッションを破棄し、トップページへ遷移
 		session.invalidate();
 		return "redirect:/";
+	}
+
+	@GetMapping("/addUser")
+	public String addUserGet(Model model) {
+		model.addAttribute("user", new User());
+		return "addUser";
+	}
+
+	@PostMapping("/addUser")
+	public String addUserPost(HttpServletRequest request,
+			Model model, @Valid User user) throws Exception {
+		service.addUser(user);
+		return "addUserDone";
 	}
 
 }
