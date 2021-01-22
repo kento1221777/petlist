@@ -23,6 +23,8 @@ public class Pet {
 	private MultipartFile upfile;
 	private String uploadDirectory;
 
+	private Integer count;
+
 	private boolean isLike;
 
 	public boolean getIsLike() {
