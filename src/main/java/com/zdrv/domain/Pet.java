@@ -15,15 +15,12 @@ public class Pet {
 
 	private Integer id;
 	private String image;
-	private String petName;
-	private String comment;
 	private Date uptime;
 	private Category category;
 	private Integer userId;
 	private MultipartFile upfile;
 	private String uploadDirectory;
-
-	private Integer count;
+	private Integer likenum;
 
 	private boolean isLike;
 

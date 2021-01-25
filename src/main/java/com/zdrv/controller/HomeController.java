@@ -31,7 +31,7 @@ public class HomeController {
 	@Autowired
 	LikeService likeService;
 
-	@GetMapping()
+	@GetMapping
 	public String home(
 			HttpSession session,
 			HttpServletRequest request,
@@ -51,25 +51,49 @@ public class HomeController {
 		model.addAttribute("categoryList", categoryList);
 		return "home";
 	}
-
-	@GetMapping("detail/{id}")
-	public String detail(
-			@PathVariable Integer id,
+	@GetMapping("likeDesc")
+	public String likeDesc(
+			HttpSession session,
+			HttpServletRequest request,
 			Model model) throws Exception {
-		model.addAttribute("pet", petService.getPetById(id));
-		return "detail";
+		List<Category> categoryList = new ArrayList<>();
+		categoryList.add(new Category(1, "犬"));
+		categoryList.add(new Category(2, "猫"));
+		categoryList.add(new Category(3, "うさぎ"));
+		categoryList.add(new Category(4, "ハムスター"));
+		categoryList.add(new Category(5, "鳥"));
+		categoryList.add(new Category(6, "魚"));
+		categoryList.add(new Category(7, "その他"));
+
+		Integer userId = (Integer) session.getAttribute("id");
+
+		model.addAttribute("petList", petService.getPetListLikeDesc(userId));
+		model.addAttribute("categoryList", categoryList);
+		return "likeDesc";
 	}
+
 
 	@GetMapping("/category/{categoryId}")
 	public String category(
 			@PathVariable Integer categoryId,
 			Model model) throws Exception {
+		List<Category> categoryList = new ArrayList<>();
+		categoryList.add(new Category(1, "犬"));
+		categoryList.add(new Category(2, "猫"));
+		categoryList.add(new Category(3, "うさぎ"));
+		categoryList.add(new Category(4, "ハムスター"));
+		categoryList.add(new Category(5, "鳥"));
+		categoryList.add(new Category(6, "魚"));
+		categoryList.add(new Category(7, "その他"));
+
+		model.addAttribute("categoryList", categoryList);
+
 		model.addAttribute("categoryTypeList", petService.getPetListByCategoryId(categoryId));
 		return "category";
 	}
 
-	@GetMapping("/mypage/{id}")
-	public String mypage(
+	@GetMapping("/mygallery/{id}")
+	public String mygallery(
 			@PathVariable Integer id,
 			Model model) throws Exception {
 		List<Pet> petList = petService.getPetListByUserId(id);
@@ -78,7 +102,7 @@ public class HomeController {
 			System.out.println(p.getImage());
 		}
 		model.addAttribute("petList", petList);
-		return "mypage";
+		return "mygallery";
 	}
 
 	@GetMapping("/like/{petId}/{userId}")
@@ -95,5 +119,7 @@ public class HomeController {
 		return "like";
 
 	}
+
+
 
 }

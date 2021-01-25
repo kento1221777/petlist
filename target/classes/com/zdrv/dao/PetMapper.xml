@@ -5,9 +5,8 @@
 	<resultMap id="joinedResult" type="com.zdrv.domain.Pet">
 		<id property="id" column="id"/>
 		<result property="image" column="image"/>
-		<result property="petName" column="pet_name"/>
-		<result property="comment" column="comment"/>
 		<result property="uptime" column="uptime"/>
+		<result property="likenum" column="likenum"/>
 		<association property="category" column="category_id"
 			javaType="com.zdrv.domain.Category">
 			<id property="id" column="id"/>
@@ -21,6 +20,13 @@
 		JOIN categories
 		ON pets.category_id = categories.id
 		ORDER BY uptime DESC
+	</select>
+
+	<select id="selectAllLikeDesc" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN categories
+		ON pets.category_id = categories.id
+		ORDER BY likenum DESC
 	</select>
 
 	<select id="selectAllAsc" resultMap="joinedResult">
@@ -75,19 +81,24 @@
 	</select>
 
 	<insert id="insert" parameterType="com.zdrv.domain.Pet" useGeneratedKeys="true">
-		INSERT INTO pets (image, pet_name, comment, category_id, user_id, uptime)
-		VALUES (#{image}, #{petName}, #{comment}, #{category.id}, #{userId}, NOW())
+		INSERT INTO pets (image, category_id, user_id, uptime)
+		VALUES (#{image}, #{category.id}, #{userId}, NOW())
 	</insert>
-
-	<update id="update" parameterType="com.zdrv.domain.Pet">
-		UPDATE pets
-		SET image = #{image}, pet_name = #{petName}, comment = #{comment},
-			category_id = #{category.id}
-		WHERE id = #{id}
-	</update>
 
 	<delete id="delete" parameterType="int">
 		DELETE FROM pets WHERE id = #{id}
 	</delete>
+
+	<update id="plusLikenum" parameterType="int">
+		UPDATE pets
+		SET likenum = likenum + 1
+		WHERE id = #{id}
+	</update>
+
+	<update id="minusLikenum" parameterType="int">
+		UPDATE pets
+		SET likenum = likenum - 1
+		WHERE id = #{id}
+	</update>
 
 </mapper>

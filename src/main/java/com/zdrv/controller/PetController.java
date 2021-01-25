@@ -75,51 +75,7 @@ public class PetController {
 		return "uploadDone";
 	}
 
-	@GetMapping("/home/gallery/edit/{id}")
-	public String editGet(@PathVariable Integer id, Model model) throws Exception {
-		model.addAttribute("pet", new Pet());
 
-		List<Category> categoryList = new ArrayList<>();
-		categoryList.add(new Category(1, "犬"));
-		categoryList.add(new Category(2, "猫"));
-		categoryList.add(new Category(3, "うさぎ"));
-		categoryList.add(new Category(4, "ハムスター"));
-		categoryList.add(new Category(5, "鳥"));
-		categoryList.add(new Category(6, "魚"));
-		categoryList.add(new Category(7, "その他"));
-
-		model.addAttribute("pet", petService.getPetById(id));
-		model.addAttribute("categoryList", categoryList);
-		return "edit";
-	}
-
-	@PostMapping("/home/gallery/edit/{id}")
-	public String editPost(
-			@PathVariable Integer id,HttpServletRequest request,
-			@RequestParam MultipartFile upfile, @Valid Pet pet, Model model) throws Exception {
-		if(upfile.isEmpty()) {
-			//ファイルが選択されいていない
-			return "edit";
-		}
-
-		//選択されたファイルの情報
-		String image = upfile.getOriginalFilename();
-		String contentType = upfile.getContentType();
-
-		// 画像以外の場合はアップさせない
-		if(!contentType.startsWith("image/")) {
-			return "edit";
-		}
-
-		//uploadsフォルダにファイルを保存
-		File dest = new File(request.getServletContext().getRealPath("/uploads") + "/" + image);
-		upfile.transferTo(dest);
-
-		pet.setUserId(id);
-		petService.editPet(pet);
-
-		return "uploadDone";
-	}
 
 	@GetMapping("/home/gallery/delete/{id}")
 	public String deleteGet(@PathVariable Integer id, Model model) throws Exception {

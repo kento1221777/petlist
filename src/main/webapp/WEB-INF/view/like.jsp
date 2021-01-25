@@ -13,6 +13,9 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${css}/bootstrap.min.css">
 <link rel="stylesheet" href="${css}/style.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -24,10 +27,9 @@
 	<!-- 画像の表示 -->
 	<div class="row">
 		<c:forEach items="${petList}" var="pet">
-			<div class="col-12 col-md-3">
-				<a href="${detail}/<c:out value="${pet.id}" />">
-				<img class="img-thumbnail"
-					 src="${uploads}/<c:out value="${pet.image}" />">
+			<div class="col-12 col-md-3 col-sm-4 col-xs-6">
+				<a href="${uploads}/<c:out value="${pet.image}" />" data-lightbox="group">
+					<img class="img-thumbnail" src="${uploads}/<c:out value="${pet.image}" />" width="300">
 				</a>
 
 			</div>

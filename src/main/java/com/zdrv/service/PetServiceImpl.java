@@ -70,17 +70,7 @@ public class PetServiceImpl implements PetService {
 		return petDao.selectAllByCategoryId(categoryId);
 	}
 
-	@Override
-	public void editPet(Pet pet) throws Exception {
-		MultipartFile upfile = pet.getUpfile();
 
-		//選択されたファイルの情報
-		String image = upfile.getOriginalFilename();
-
-		pet.setImage(image);
-
-		petDao.update(pet);
-	}
 
 	@Override
 	public void deletePet(Integer id) throws Exception {
@@ -90,6 +80,24 @@ public class PetServiceImpl implements PetService {
 	@Override
 	public List<Pet> getPetListByLike(Integer userId) throws Exception {
 		return petDao.selectAllByLike(userId);
+	}
+
+	@Override
+	public List<Pet> getPetListLikeDesc(Integer userId) throws Exception {
+		List<Pet> petList =  petDao.selectAllLikeDesc();
+		List<Pet> modifiedPetList = new ArrayList<>();
+		for(Pet pet : petList) {
+			Like like = likeDao.findByPetIdAndUserId(pet.getId(), userId);
+
+			if(like != null) {
+				pet.setLike(true);
+			} else {
+				pet.setLike(false);
+			}
+			modifiedPetList.add(pet);
+		}
+
+		return modifiedPetList;
 	}
 
 

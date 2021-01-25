@@ -7,6 +7,12 @@
 <spring:url value="/js" var="js" />
 <spring:url value="/home/detail" var="detail" />
 <spring:url value="/home" var="home" />
+<spring:url value="/logout" var="logout" />
+<spring:url value="/add" var="add" />
+<spring:url value="/home/mygallery" var="mygallery" />
+<spring:url value="/home/like" var="like" />
+<spring:url value="/home/category" var="cate" />
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -16,6 +22,10 @@
 <link rel="stylesheet" href="${css}/style.css">
 <link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
+
 <title>Insert title here</title>
 </head>
 <body class="home" style="padding-bottom:4.5rem;">
@@ -32,9 +42,10 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
 						<li class="nav-item active"><a class="nav-link" href="${home}">ホーム</a></li>
-						<li class="nav-item"><a class="nav-link" href="add/<c:out value="${id} "/>">投稿</a></li>
-						<li class="nav-item"><a class="nav-link" href="home/mypage/<c:out value="${id} "/>">マイページ</a></li>
-						<li class="nav-item"><a class="nav-link" href="logout">ログアウト</a></li>
+						<li class="nav-item"><a class="nav-link" href="${add}/<c:out value="${id} "/>">投稿</a></li>
+						<li class="nav-item"><a class="nav-link" href="${mygallery}/<c:out value="${id} "/>">マイギャラリー</a></li>
+						<li class="nav-item"><a class="nav-link" href="${like}/<c:out value="${id} "/>">お気に入り一覧</a></li>
+						<li class="nav-item"><a class="nav-link" href="${logout}">ログアウト</a></li>
 
 					</ul>
 				</div>
@@ -42,6 +53,8 @@
 		</header>
 
 		<h1>一覧</h1>
+		<a href="${home}">新着順</a>
+		<a href="${home}/likeDesc">いいね順</a>
 
 		<p>
 			<c:out value="${name}" />
@@ -51,7 +64,7 @@
 
 
 		<c:forEach items="${categoryList}" var="category">
-			<a href="home/category/<c:out value="${category.id} "/>"> <c:out
+			<a href="${cate}/<c:out value="${category.id} "/>"> <c:out
 					value="${category.categoryName} " />
 			</a>
 		</c:forEach>
@@ -61,12 +74,13 @@
 			<c:forEach items="${petList}" var="pet">
 				<div class="col-md-3 col-sm-4 col-xs-6">
 
-					<a href="${detail}/<c:out value="${pet.id}" />"> <img
-						class="img-thumbnail"
-						src="${uploads}/<c:out value="${pet.image}" />">
+					<a href="${uploads}/<c:out value="${pet.image}" />" data-lightbox="group">
+					<img class="img-thumbnail" src="${uploads}/<c:out value="${pet.image}" />" width="300">
 					</a>
 
-					<c:out value="${count}" />
+					<span class="">
+					<c:out value="${pet.likenum}" />
+					</span>
 					<!-- いいねボタン -->
 					<c:if test="${pet.isLike}">
 						<div class="heart like" data-pet_id="<c:out value="${pet.id}" />"
@@ -90,16 +104,20 @@
 							const petId = $(this).attr('data-pet_id');
 							const userId = $(this).attr('data-user_id');
 							const clickedButton = $(this);
-							$.ajax({ url : 'http://localhost:8080/Petlist/home/like/' + petId + '/' + userId,
+							const likenumSpan = $(this).prev();
+							$.ajax({ url : 'http://localhost:8888/Petlist/home/like/' + petId + '/' + userId,
 									 type : 'GET'
 									 }).done(function(res) {
 										// 「いいね」追加の場合はtrue、削除の場合はfalseがresに入る
 										console.log(res);
 
+										const likenum = likenumSpan.text();
 										if (res == true) {
 											// ボタンに色を付ける クラスつけてCSS適用
+											likenumSpan.text(+ likenum + 1);
 											clickedButton.addClass('like');
 										} else if (res == false) {
+											likenumSpan.text(likenum - 1);
 											clickedButton.removeClass('like')
 										}
 

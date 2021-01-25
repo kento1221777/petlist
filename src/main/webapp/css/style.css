@@ -1,6 +1,4 @@
-h1 {
-	color: red;
-}
+
 
 .hoge2A {
 	background-color: #fff;
@@ -11,9 +9,6 @@ h1 {
 	color: #f00;
 }
 
-.petname {
-	font-size: 14px;
-}
 
 .heart {
   width: 100px;
@@ -27,3 +22,8 @@ h1 {
   -webkit-transition: background 1s steps(28);
   transition: background 1s steps(28);
 }
+
+.detail-box {
+	text-align : center;
+}
+

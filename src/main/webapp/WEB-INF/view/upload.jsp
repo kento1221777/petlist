@@ -23,14 +23,6 @@
 			ファイル：
 			<form:input type="file" path="upfile" />
 		</p>
-		<p>
-			名前：
-			<form:input path="petName" />
-		</p>
-		<p>
-			コメント
-			<form:textarea path="comment" />
-		</p>
 
 		<p>
 			カテゴリ：
@@ -42,7 +34,7 @@
 
 	</form:form>
 
-	<img id="preview" width="200px">
+	<img id="preview" width="500px">
 
 <script src="${js}/jquery-3.5.1.min.js"></script>
 <script src="${js}/bootstrap.min.js"></script>
