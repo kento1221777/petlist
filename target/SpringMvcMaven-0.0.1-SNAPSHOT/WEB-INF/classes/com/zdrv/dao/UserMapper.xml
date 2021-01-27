@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.UserDao">
+
+	<resultMap id="joinedResult" type="com.zdrv.domain.User">
+		<id property="id" column="id"/>
+		<result property="loginId" column="login_id"/>
+		<result property="loginPass" column="login_pass"/>
+		<result property="name" column="name"/>
+		<collection property="pet" ofType="com.zdrv.domain.Pet">
+			<result property="image" column="image"/>
+			<result property="petName" column="pet_name"/>
+			<result property="comment" column="comment"/>
+		</collection>
+	</resultMap>
+
+
+
+	<select id="selectByLoginId" resultMap="joinedResult">
+		SELECT * FROM users
+		WHERE login_id = #{loginId}
+	</select>
+
+	<select id="selectMyimageByUserId" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM users
+		JOIN pets
+		ON users.id = pets.user_id
+		WHERE pets.user_id = #{id}
+	</select>
+
+	<insert id="insertUser" parameterType="com.zdrv.domain.User" useGeneratedKeys="true">
+		INSERT INTO users (name, login_id, login_pass)
+		VALUES (#{name}, #{loginId}, #{loginPass})
+	</insert>
+
+</mapper>

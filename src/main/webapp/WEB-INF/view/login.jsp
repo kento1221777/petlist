@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>会員管理システム</title>
+<title>PhotoPet | ログイン画面</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -19,6 +19,8 @@
 	<form:form class="mt-4" action="" method="post" modelAttribute="user">
 		<form:errors path="loginId" cssClass="error" />
 		<p class="mt-2">ログインID：<form:input path="loginId" /></p>
+
+		<form:errors path="loginPass" cssClass="error" />
 		<p>パスワード：<form:password path="loginPass" /></p>
 		<input class="btn btn-primary" type="submit" value="ログイン">
 	</form:form>

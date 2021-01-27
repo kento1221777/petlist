@@ -11,6 +11,7 @@
 <spring:url value="/add" var="add" />
 <spring:url value="/home/mygallery" var="mygallery" />
 <spring:url value="/home/like" var="like" />
+<spring:url value="/delete" var="delete" />
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -23,7 +24,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
-<title>Insert title here</title>
+<title>PhotoPet | マイギャラリー</title>
 </head>
 <body class="home" style="padding-bottom:4.5rem;">
 	<div class="container">
@@ -62,7 +63,7 @@
 					<img class="img-thumbnail" src="${uploads}/<c:out value="${pet.image}" />" width="300">
 					</a>
 					<button
-						onclick="location.href='delete/<c:out value="${pet.id}" />'"
+						onclick="location.href='${delete}/<c:out value="${pet.id}" />'"
 						type="button" class="btn btn-danger">削除</button>
 
 				</div>

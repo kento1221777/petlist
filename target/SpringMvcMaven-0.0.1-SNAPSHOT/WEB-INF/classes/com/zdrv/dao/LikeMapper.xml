@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.LikeDao">
+
+	<resultMap id="joinedResult" type="com.zdrv.domain.Like">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="petId" column="pet_id" />
+	</resultMap>
+
+	<insert id="insert" useGeneratedKeys="true">
+		INSERT INTO likes (pet_id,
+		user_id)
+		VALUES (#{petId}, #{userId})
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM likes
+		WHERE pet_id
+		= #{petId}
+		AND user_id = #{userId}
+	</delete>
+
+	<select id="findByPetIdAndUserId" resultMap="joinedResult">
+		SELECT * FROM likes
+		WHERE pet_id = #{petId}
+		AND user_id = #{userId}
+	</select>
+
+	<select id="count" resultType="hashmap">
+		select pet_id, count(id) as count
+		from likes
+		group by pet_id
+	</select>
+
+
+
+
+</mapper>

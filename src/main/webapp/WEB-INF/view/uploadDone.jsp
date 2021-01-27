@@ -3,10 +3,10 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>PhotoPet | 完了</title>
 </head>
 <body>
-<h1>投稿完了</h1>
-<p><a href="/Petlist/home">ホーム</a></p>
+<h1>完了</h1>
+<p><a href="/pet/home">ホーム</a></p>
 </body>
 </html>

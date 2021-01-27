@@ -12,13 +12,14 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${css}/bootstrap.min.css">
 <link rel="stylesheet" href="${css}/style.css">
-<title>Insert title here</title>
+<title>PhotoPet | 写真投稿</title>
 </head>
 <body>
 
 
 	<form:form action="" method="post" modelAttribute="pet"
 		enctype="multipart/form-data">
+		<form:errors path="upfile" cssClass="error" />
 		<p>
 			ファイル：
 			<form:input type="file" path="upfile" />

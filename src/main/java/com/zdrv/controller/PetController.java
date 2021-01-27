@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,16 +33,9 @@ public class PetController {
 	public String addGet(@PathVariable Integer id, Model model) {
 		model.addAttribute("pet", new Pet());
 
-		List<Category> categoryList = new ArrayList<>();
-		categoryList.add(new Category(1, "犬"));
-		categoryList.add(new Category(2, "猫"));
-		categoryList.add(new Category(3, "うさぎ"));
-		categoryList.add(new Category(4, "ハムスター"));
-		categoryList.add(new Category(5, "鳥"));
-		categoryList.add(new Category(6, "魚"));
-		categoryList.add(new Category(7, "その他"));
 
-		model.addAttribute("categoryList", categoryList);
+
+		model.addAttribute("categoryList", getCategoryList());
 		return "upload";
 	}
 
@@ -49,9 +43,11 @@ public class PetController {
 	public String addPost(
 			@PathVariable Integer id,
 			HttpServletRequest request,
-			@RequestParam MultipartFile upfile, @Valid Pet pet, Model model) throws Exception {
+			@RequestParam MultipartFile upfile, @Valid Pet pet, Errors errors, Model model) throws Exception {
 		if(upfile.isEmpty()) {
 			//ファイルが選択されいていない
+			errors.rejectValue("upfile", "error.not_image_file");
+			model.addAttribute("categoryList", getCategoryList());
 			return "upload";
 		}
 
@@ -61,6 +57,8 @@ public class PetController {
 
 		// 画像以外の場合はアップさせない
 		if(!contentType.startsWith("image/")) {
+			errors.rejectValue("upfile", "error.not_image_file");
+			model.addAttribute("categoryList", getCategoryList());
 			return "upload";
 		}
 
@@ -77,13 +75,13 @@ public class PetController {
 
 
 
-	@GetMapping("/home/gallery/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteGet(@PathVariable Integer id, Model model) throws Exception {
 		model.addAttribute("pet", petService.getPetById(id));
 		return "delete";
 	}
 
-	@PostMapping("/home/gallery/delete/{id}")
+	@PostMapping("/delete/{id}")
 	public String deletePost(@PathVariable Integer id, Model model, HttpServletRequest request) throws Exception {
 
 		if(request.getParameter("cancel") != null) {
@@ -93,4 +91,15 @@ public class PetController {
 		return "uploadDone";
 	}
 
+	private List<Category> getCategoryList() {
+		List<Category> categoryList = new ArrayList<>();
+		categoryList.add(new Category(1, "犬"));
+		categoryList.add(new Category(2, "猫"));
+		categoryList.add(new Category(3, "うさぎ"));
+		categoryList.add(new Category(4, "ハムスター"));
+		categoryList.add(new Category(5, "鳥"));
+		categoryList.add(new Category(6, "魚"));
+		categoryList.add(new Category(7, "その他"));
+		return categoryList;
+	}
 }

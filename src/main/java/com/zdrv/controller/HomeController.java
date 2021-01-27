@@ -36,19 +36,9 @@ public class HomeController {
 			HttpSession session,
 			HttpServletRequest request,
 			Model model) throws Exception {
-		List<Category> categoryList = new ArrayList<>();
-		categoryList.add(new Category(1, "犬"));
-		categoryList.add(new Category(2, "猫"));
-		categoryList.add(new Category(3, "うさぎ"));
-		categoryList.add(new Category(4, "ハムスター"));
-		categoryList.add(new Category(5, "鳥"));
-		categoryList.add(new Category(6, "魚"));
-		categoryList.add(new Category(7, "その他"));
-
 		Integer userId = (Integer) session.getAttribute("id");
-
 		model.addAttribute("petList", petService.getPetList(userId));
-		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryList", getCategoryList());
 		return "home";
 	}
 	@GetMapping("likeDesc")
@@ -56,19 +46,9 @@ public class HomeController {
 			HttpSession session,
 			HttpServletRequest request,
 			Model model) throws Exception {
-		List<Category> categoryList = new ArrayList<>();
-		categoryList.add(new Category(1, "犬"));
-		categoryList.add(new Category(2, "猫"));
-		categoryList.add(new Category(3, "うさぎ"));
-		categoryList.add(new Category(4, "ハムスター"));
-		categoryList.add(new Category(5, "鳥"));
-		categoryList.add(new Category(6, "魚"));
-		categoryList.add(new Category(7, "その他"));
-
 		Integer userId = (Integer) session.getAttribute("id");
-
 		model.addAttribute("petList", petService.getPetListLikeDesc(userId));
-		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryList", getCategoryList());
 		return "likeDesc";
 	}
 
@@ -77,17 +57,7 @@ public class HomeController {
 	public String category(
 			@PathVariable Integer categoryId,
 			Model model) throws Exception {
-		List<Category> categoryList = new ArrayList<>();
-		categoryList.add(new Category(1, "犬"));
-		categoryList.add(new Category(2, "猫"));
-		categoryList.add(new Category(3, "うさぎ"));
-		categoryList.add(new Category(4, "ハムスター"));
-		categoryList.add(new Category(5, "鳥"));
-		categoryList.add(new Category(6, "魚"));
-		categoryList.add(new Category(7, "その他"));
-
-		model.addAttribute("categoryList", categoryList);
-
+		model.addAttribute("categoryList", getCategoryList());
 		model.addAttribute("categoryTypeList", petService.getPetListByCategoryId(categoryId));
 		return "category";
 	}
@@ -120,6 +90,16 @@ public class HomeController {
 
 	}
 
-
+	private List<Category> getCategoryList() {
+		List<Category> categoryList = new ArrayList<>();
+		categoryList.add(new Category(1, "犬"));
+		categoryList.add(new Category(2, "猫"));
+		categoryList.add(new Category(3, "うさぎ"));
+		categoryList.add(new Category(4, "ハムスター"));
+		categoryList.add(new Category(5, "鳥"));
+		categoryList.add(new Category(6, "魚"));
+		categoryList.add(new Category(7, "その他"));
+		return categoryList;
+	}
 
 }

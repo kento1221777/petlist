@@ -12,21 +12,26 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${css}/bootstrap.min.css">
 <link rel="stylesheet" href="${css}/style.css">
-<title>Insert title here</title>
+<title>PhotoPet | 新規登録画面</title>
 </head>
 <body>
 
 
 	<form:form action="" method="post" modelAttribute="user">
 
+		<form:errors path="name" cssClass="error" />
 		<p>
 			名前：
 			<form:input path="name" />
 		</p>
+
+		<form:errors path="loginId" cssClass="error" />
 		<p>
 			ログインID：
 			<form:input path="loginId" />
 		</p>
+
+		<form:errors path="loginPass" cssClass="error" />
 		<p>
 			パスワード：
 			<form:input path="loginPass" />

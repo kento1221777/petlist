@@ -2,17 +2,19 @@ package com.zdrv.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.zdrv.domain.User;
 import com.zdrv.service.UserService;
+import com.zdrv.validation.LoginGroup;
+import com.zdrv.validation.RegisterGroup;
 
 
 @Controller
@@ -29,7 +31,7 @@ public class LoginController {
 
 	@PostMapping({"/", "/login"})
 	public String login(
-			@Valid User user,
+			@Validated(LoginGroup.class) User user,
 			Errors errors,
 			HttpSession session) throws Exception {
 		// 入力に不備がある
@@ -66,7 +68,10 @@ public class LoginController {
 
 	@PostMapping("/addUser")
 	public String addUserPost(HttpServletRequest request,
-			Model model, @Valid User user) throws Exception {
+			Model model, @Validated(RegisterGroup.class) User user, Errors errors) throws Exception {
+		if(errors.hasErrors()) {
+			return "addUser";
+			}
 		service.addUser(user);
 		return "addUserDone";
 	}

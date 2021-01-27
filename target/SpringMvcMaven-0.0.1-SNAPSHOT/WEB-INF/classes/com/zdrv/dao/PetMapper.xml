@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zdrv.dao.PetDao">
+
+	<resultMap id="joinedResult" type="com.zdrv.domain.Pet">
+		<id property="id" column="id"/>
+		<result property="image" column="image"/>
+		<result property="uptime" column="uptime"/>
+		<result property="likenum" column="likenum"/>
+		<association property="category" column="category_id"
+			javaType="com.zdrv.domain.Category">
+			<id property="id" column="id"/>
+			<result property="categoryName" column="category_name"/>
+		</association>
+	</resultMap>
+
+
+	<select id="selectAll" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN categories
+		ON pets.category_id = categories.id
+		ORDER BY uptime DESC
+	</select>
+
+	<select id="selectAllLikeDesc" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN categories
+		ON pets.category_id = categories.id
+		ORDER BY likenum DESC
+	</select>
+
+	<select id="selectAllAsc" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN categories
+		ON pets.category_id = categories.id
+		ORDER BY uptime ASC
+	</select>
+
+	<select id="selectById" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN categories
+		ON pets.category_id = categories.id
+		WHERE pets.id = #{id}
+	</select>
+
+	<select id="selectAllByCategoryId" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN categories
+		ON pets.category_id = categories.id
+		WHERE pets.category_id = #{category.id}
+		ORDER BY uptime DESC
+	</select>
+
+	<select id="selectAllByCategoryIdAsc" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN categories
+		ON pets.category_id = categories.id
+		WHERE pets.category_id = #{category.id}
+		ORDER BY uptime ASC
+	</select>
+
+	<select id="selectAllByUserId" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		WHERE user_id = #{userId}
+		ORDER BY uptime DESC
+	</select>
+
+	<select id="selectAllByUserIdAsc" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		WHERE user_id = #{userId}
+		ORDER BY uptime ASC
+	</select>
+
+	<select id="selectAllByLike" parameterType="int" resultMap="joinedResult">
+		SELECT * FROM pets
+		JOIN likes
+		ON pets.id = likes.pet_id
+		JOIN users
+		ON likes.user_id = users.id
+		WHERE likes.user_id = #{userId}
+	</select>
+
+	<insert id="insert" parameterType="com.zdrv.domain.Pet" useGeneratedKeys="true">
+		INSERT INTO pets (image, category_id, user_id, uptime)
+		VALUES (#{image}, #{category.id}, #{userId}, NOW())
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM pets WHERE id = #{id}
+	</delete>
+
+	<update id="plusLikenum" parameterType="int">
+		UPDATE pets
+		SET likenum = likenum + 1
+		WHERE id = #{id}
+	</update>
+
+	<update id="minusLikenum" parameterType="int">
+		UPDATE pets
+		SET likenum = likenum - 1
+		WHERE id = #{id}
+	</update>
+
+</mapper>

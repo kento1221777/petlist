@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${css}/bootstrap.min.css">
 <link rel="stylesheet" href="${css}/style.css">
-<title>Insert title here</title>
+<title>PhotoPet | 削除確認</title>
 </head>
 <body>
 
@@ -20,8 +20,7 @@
 
 	<img class="img-thumbnail"
 		src="${uploads}/<c:out value="${pet.image}" />">
-	<c:out value="${pet.petName}" />
-	<c:out value="${pet.comment}" />
+
 
 	<form action="" method="post">
 		<div class="button">

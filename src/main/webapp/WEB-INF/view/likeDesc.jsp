@@ -23,14 +23,14 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
-<title>Insert title here</title>
+<title>PhotoPet | いいね順</title>
 </head>
 <body class="home" style="padding-bottom:4.5rem;">
 	<div class="container">
 
 		<header>
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<a class="navbar-brand" href="#">PhotoPet</a>
+				<a class="navbar-brand" href="${home}">PhotoPet</a>
 				<button type="button" class="navbar-toggler" data-toggle="collapse"
 					data-target="#navbarNav" aria-controls="navbarNav"
 					aria-expanded="false" aria-label="ナビゲーションの切替">
@@ -38,33 +38,32 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
-						<li class="nav-item active"><a class="nav-link" href="${home}">ホーム</a></li>
+						<li class="nav-item active"><c:out value="${name}" />さん</li>
 						<li class="nav-item"><a class="nav-link" href="${add}/<c:out value="${id} "/>">投稿</a></li>
 						<li class="nav-item"><a class="nav-link" href="${mygallery}/<c:out value="${id} "/>">マイギャラリー</a></li>
 						<li class="nav-item"><a class="nav-link" href="${like}/<c:out value="${id} "/>">お気に入り一覧</a></li>
 						<li class="nav-item"><a class="nav-link" href="${logout}">ログアウト</a></li>
+						<li class="nav-item dropdown">
+					        <a href="#" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" id="navbarDropdownMenuLink" aria-haspopup="true" aria-expanded="false">カテゴリー</a>
+					        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					        	<c:forEach items="${categoryList}" var="category">
+						          <a class="dropdown-item" href="${cate}/<c:out value="${category.id} "/>">
+						          	<c:out value="${category.categoryName}" />
+						          </a>
+					          	</c:forEach>
 
+					        </div><!-- ./dropdown-menu -->
+					    </li>
 					</ul>
 				</div>
 			</nav>
 		</header>
 
 		<h1>一覧</h1>
-		<a href="${home}">新着順</a>
-		<a href="${home}/likeDesc">いいね順</a>
-
-		<p>
-			<c:out value="${name}" />
-			さん
-		</p>
-
-
-
-		<c:forEach items="${categoryList}" var="category">
-			<a href="${cate}/<c:out value="${category.id} "/>"> <c:out
-					value="${category.categoryName} " />
-			</a>
-		</c:forEach>
+		<div class="btn00">
+			<a href="${home}" class="btn01">新着順</a>
+			<a href="${home}/likeDesc" class="btn02">いいね順</a>
+		</div>
 
 		<!-- 画像の表示 -->
 		<div class="row petimagelist">
@@ -97,12 +96,21 @@
 	<script src="${js}/bootstrap.min.js"></script>
 
 	<script>
+	/*ドロップダウン*/
+	 $('.dropdown').on('show.bs.dropdown', function() {
+	   $(this).find('.dropdown-menu').first().stop(true, true).slideDown();
+	 });
+
+	 $('.dropdown').on('hide.bs.dropdown', function() {
+	   $(this).find('.dropdown-menu').first().stop(true, true).slideUp();
+	 });
+
 		$('.heart').click(function() {
 							const petId = $(this).attr('data-pet_id');
 							const userId = $(this).attr('data-user_id');
 							const clickedButton = $(this);
 							const likenumSpan = $(this).prev();
-							$.ajax({ url : 'http://localhost:8888/Petlist/home/like/' + petId + '/' + userId,
+							$.ajax({ url : 'http://java.apps.rok.jp:22293/pet/home/like/' + petId + '/' + userId,
 									 type : 'GET'
 									 }).done(function(res) {
 										// 「いいね」追加の場合はtrue、削除の場合はfalseがresに入る
